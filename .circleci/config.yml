@@ -1,0 +1,59 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.1
+  azure-cli: circleci/azure-cli@1.2
+  terraform: circleci/terraform@3.2
+
+jobs:
+  install_dependencies:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: yarn
+
+  plan:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - run: yarn install
+      - run: cdktf get
+      - run: cdktf plan
+
+  approve:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - add_ssh_keys
+      - run:
+          name: Manual approval
+          command: |
+            echo "Awaiting approval from authorized users"
+            circleci-agent step halt
+
+  apply:
+    docker:
+      - image: cimg/node:14.17
+    steps:
+      - checkout
+      - run: yarn install
+      - run: cdktf apply --auto-approve
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - install_dependencies
+      - plan:
+          requires:
+            - install_dependencies
+      - approve:
+          type: approval
+          requires:
+            - plan
+      - apply:
+          requires:
+            - approve
