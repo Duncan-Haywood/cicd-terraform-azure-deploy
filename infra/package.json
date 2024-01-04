@@ -25,7 +25,8 @@
   "dependencies": {
     "cdktf": "^0.19.2",
     "cdktf-cli": "^0.19.2",
-    "constructs": "^10.3.0"
+    "constructs": "^10.3.0",
+    "ts-node": "^10.9.2"
   },
   "packageManager": "yarn@4.0.2"
 }
