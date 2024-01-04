@@ -15,8 +15,8 @@ jobs:
           command: |
             cd infra
             yarn set version stable
-            yarn install
             yarn --version 
+            yarn install
             yarn dlx cdktf get
       - save_cache:
           key: yarn-packages-{{ checksum "infra/yarn.lock" }}
