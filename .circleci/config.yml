@@ -28,6 +28,8 @@ jobs:
     executor: node/default
     steps:
       - checkout
+      - restore_cache:
+          key: yarn-packages-{{ checksum "infra/yarn.lock" }}
       - run: 
           name: Install dependencies and Synth
           command: |
@@ -70,7 +72,6 @@ workflows:
   build_and_deploy:
     jobs:
       - install_dependencies
-    
       - synth:
           filters:
             branches:
