@@ -6,44 +6,32 @@ orbs:
   terraform: circleci/terraform@3.2
 
 jobs:
-  install_dependencies:
-    docker:
-      - image: cimg/node:14.17
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn
-
   plan:
     docker:
-      - image: cimg/node:14.17
+      - image: cimg/node:21.3
     steps:
       - checkout
-      - run: yarn install
-      - run: cdktf get
-      - run: cdktf plan
-
-  approve:
-    docker:
-      - image: cimg/node:14.17
-    steps:
-      - add_ssh_keys
-      - run:
-          name: Manual approval
+      - run: 
+          name: Install dependencies and Plan
           command: |
-            echo "Awaiting approval from authorized users"
-            circleci-agent step halt
+            cd infra
+            yarn install
+            cdktf get
+            cdktf plan
 
   apply:
     docker:
-      - image: cimg/node:14.17
+      - image: cimg/node:21.3
     steps:
       - checkout
-      - run: yarn install
-      - run: cdktf apply --auto-approve
+      - run: 
+          name: Install dependencies and Apply
+          command: |
+            cd infra
+            yarn install
+            cdktf apply --auto-approve
 
 workflows:
-  version: 2
   build_and_deploy:
     jobs:
       - install_dependencies
