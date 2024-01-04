@@ -14,7 +14,7 @@ jobs:
           name: Install dependencies
           command: |
             cd infra
-            yarn set version stable
+            yarn set version 4.0.2
             yarn --version 
             yarn install
             yarn dlx cdktf get
@@ -33,7 +33,6 @@ jobs:
           name: Install dependencies and Plan
           command: |
             cd infra
-            yarn set version stable
             yarn install
             yarn --version 
             yarn dlx cdktf get
@@ -49,7 +48,6 @@ jobs:
           name: Install dependencies and Apply
           command: |
             cd infra
-            yarn set version stable
             yarn --version
             yarn install
             yarn dlx cdktf get
