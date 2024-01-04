@@ -34,9 +34,7 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - plan:
-          requires:
-            - install_dependencies
+      - plan
       - approve:
           type: approval
           requires:
