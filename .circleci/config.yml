@@ -17,7 +17,7 @@ jobs:
             yarn set version 4.0.2
             yarn --version 
             yarn install
-            yarn dlx cdktf get
+            yarn get
       - save_cache:
           key: yarn-packages-{{ checksum "infra/yarn.lock" }}
           paths:
@@ -35,8 +35,8 @@ jobs:
             cd infra
             yarn install
             yarn --version 
-            yarn dlx cdktf get
-            yarn dlx cdktf plan
+            yarn get
+            yarn plan
 
   apply:
     executor: node/default
@@ -50,8 +50,8 @@ jobs:
             cd infra
             yarn --version
             yarn install
-            yarn dlx cdktf get
-            yarn dlx cdktf apply --auto-approve
+            yarn get
+            yarn apply:auto-approve
 
 workflows:
   build_and_deploy:
