@@ -23,6 +23,19 @@ jobs:
           paths:
             - infra/yarn.lock
             - infra/node_modules
+
+  synth:
+    executor: node/default
+    steps:
+      - checkout
+      - run: 
+          name: Install dependencies and Synth
+          command: |
+            cd infra
+            yarn --version
+            yarn install
+            yarn get
+            yarn synth
   plan:
     executor: node/default
     steps:
