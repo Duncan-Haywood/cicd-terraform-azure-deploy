@@ -16,8 +16,8 @@ jobs:
           command: |
             cd infra
             yarn install
-            cdktf get
-            cdktf plan
+            npx cdktf get
+            npx cdktf plan
 
   apply:
     docker:
@@ -29,7 +29,7 @@ jobs:
           command: |
             cd infra
             yarn install
-            cdktf apply --auto-approve
+            npx cdktf apply --auto-approve
 
 workflows:
   build_and_deploy:
