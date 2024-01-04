@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@cdktf/provider-azurerm@^11.2.0":
-  version "11.2.0"
-  resolved "https://registry.yarnpkg.com/@cdktf/provider-azurerm/-/provider-azurerm-11.2.0.tgz#d83d5235e803e16931db55d820f29b38ff2b6a28"
-  integrity sha512-1YpDrScd4YckEVKBPnXUI9yGeRmv7SiQdAj6Mq9eBXWgP1bemRk4mkQlqGm2pe9h5BECLEMZyAg5Cv/JGJX0Uw==
-
 archiver-utils@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/archiver-utils/-/archiver-utils-2.1.0.tgz#e8a460e94b693c3e3da182a098ca6285ba9249e2"
