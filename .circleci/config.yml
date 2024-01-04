@@ -58,12 +58,24 @@ workflows:
     jobs:
       - install_dependencies
       - plan:
+          filters:
+            branches:
+              only:
+                - main
           requires:
               - install_dependencies
       - approve:
+          filters:
+            branches:
+              only:
+                - main
           type: approval
           requires:
             - plan
       - apply:
+          filters:
+            branches:
+              only:
+                - main
           requires:
             - approve
