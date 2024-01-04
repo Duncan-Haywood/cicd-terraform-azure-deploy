@@ -6,29 +6,51 @@ orbs:
   terraform: circleci/terraform@3.2
 
 jobs:
-  plan:
-    docker:
-      - image: cimg/node:21.3
+  install_dependencies:
+    executor: node/default
     steps:
       - checkout
+      - run: 
+          name: Install dependencies
+          command: |
+            cd infra
+            yarn install
+            yarn set version berry
+            yarn --version 
+            yarn dlx cdktf get
+      - save_cache:
+          key: yarn-packages-{{ checksum "infra/yarn.lock" }}
+          paths:
+            - infra/yarn.lock
+            - infra/node_modules
+  plan:
+    executor: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-packages-{{ checksum "infra/yarn.lock" }}
       - run: 
           name: Install dependencies and Plan
           command: |
             cd infra
             yarn install
+            yarn set version berry
+            yarn --version 
             yarn dlx cdktf get
             yarn dlx cdktf plan
 
   apply:
-    docker:
-      - image: cimg/node:21.3
+    executor: node/default
     steps:
       - checkout
+      - restore_cache:
+          key: yarn-packages-{{ checksum "infra/yarn.lock" }}
       - run: 
           name: Install dependencies and Apply
           command: |
             cd infra
             yarn install
+            yarn dlx cdktf get
             yarn dlx cdktf apply --auto-approve
 
 workflows:
